@@ -12,7 +12,7 @@ const Card = React.forwardRef<
       data-slot="card"
       data-size={size}
       className={cn(
-        "group/card flex flex-col gap-4 overflow-hidden rounded-[1.5rem] border border-white/60 bg-white/90 py-4 text-sm text-card-foreground shadow-[0_18px_60px_-24px_rgba(15,23,42,0.3)] ring-1 ring-slate-900/5 backdrop-blur supports-[backdrop-filter]:bg-white/80 has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:gap-3 data-[size=sm]:py-3 data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-[1.5rem] *:[img:last-child]:rounded-b-[1.5rem]",
+        "group/card flex flex-col gap-4 overflow-hidden rounded-2xl border border-white/40 bg-white/95 py-4 text-sm text-card-foreground shadow-[0_20px_60px_-20px_rgba(15,23,42,0.28)] ring-1 ring-slate-900/6 backdrop-blur supports-[backdrop-filter]:bg-white/85 hover:shadow-[0_26px_90px_-24px_rgba(15,23,42,0.36)] transform-gpu will-change-transform data-[size=sm]:gap-3 data-[size=sm]:py-3",
         className
       )}
       {...props}

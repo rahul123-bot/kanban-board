@@ -123,10 +123,11 @@
   }
   body {
     @apply bg-background text-foreground;
+    /* Reduce white washout so foreground text remains high-contrast */
     background-image:
-      radial-gradient(circle at top left, rgba(56, 189, 248, 0.18), transparent 30%),
-      radial-gradient(circle at top right, rgba(15, 23, 42, 0.08), transparent 25%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.8));
+      radial-gradient(circle at top left, rgba(56, 189, 248, 0.14), transparent 30%),
+      radial-gradient(circle at top right, rgba(15, 23, 42, 0.06), transparent 25%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.22));
     background-attachment: fixed;
   }
   html {
@@ -154,3 +155,24 @@
     background-clip: content-box;
   }
 }
+
+/* Improve legibility in main content areas without changing logic.
+   This forces higher text contrast and full opacity for elements inside the
+   primary app container so labels like "Login", board names and task text
+   don't appear washed out. */
+main .mx-auto, main .mx-auto * {
+  color: var(--foreground) !important;
+  opacity: 1 !important;
+}
+
+/* Premium typography tweak */
+h1, h2, h3, h4, h5, h6 {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Subtle card and section background accent */
+.premium-accent {
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(248,250,252,0.9));
+}
+
