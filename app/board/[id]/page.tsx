@@ -581,7 +581,7 @@ const removeMember = async (memberId: string) => {
                     No members yet. Invite someone to start collaborating.
                   </div>
                 ) : (
-                  members.map((member) => (
+                  members.map((member: BoardMember) => (
                     <div
                       key={member.id}
                       className="flex items-center justify-between gap-3 rounded-2xl border border-white/80 bg-white px-4 py-3 shadow-sm"
