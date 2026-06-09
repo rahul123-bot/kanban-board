@@ -2,10 +2,9 @@ import * as React from "react";
 
 import { cn } from "@/lib/utils";
 
-const Card = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentProps<"div"> & { size?: "default" | "sm" }
->(({ className, size = "default", ...props }, ref) => {
+type DivProps = Record<string, any>;
+
+const Card = React.forwardRef(({ className, size = "default", ...props }: DivProps & { size?: "default" | "sm" }, ref: any) => {
   return (
     <div
       ref={ref}
@@ -21,7 +20,7 @@ const Card = React.forwardRef<
 });
 Card.displayName = "Card";
 
-function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+function CardHeader({ className, ...props }: DivProps) {
   return (
     <div
       data-slot="card-header"
@@ -34,7 +33,7 @@ function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+function CardTitle({ className, ...props }: DivProps) {
   return (
     <div
       data-slot="card-title"
@@ -47,7 +46,7 @@ function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
+function CardDescription({ className, ...props }: DivProps) {
   return (
     <div
       data-slot="card-description"
@@ -57,7 +56,7 @@ function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CardAction({ className, ...props }: React.ComponentProps<"div">) {
+function CardAction({ className, ...props }: DivProps) {
   return (
     <div
       data-slot="card-action"
@@ -70,7 +69,7 @@ function CardAction({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+function CardContent({ className, ...props }: DivProps) {
   return (
     <div
       data-slot="card-content"
@@ -80,7 +79,7 @@ function CardContent({ className, ...props }: React.ComponentProps<"div">) {
   );
 }
 
-function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
+function CardFooter({ className, ...props }: DivProps) {
   return (
     <div
       data-slot="card-footer"
