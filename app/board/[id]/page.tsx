@@ -377,10 +377,10 @@ const removeMember = async (memberId: string) => {
     useSensor(TouchSensor, { activationConstraint: { delay: 80, tolerance: 8 } })
   );
 
-  const todoTasks = tasks.filter((task) => task.status === "todo");
-  const progressTasks = tasks.filter((task) => task.status === "in-progress");
-  const reviewTasks = tasks.filter((task) => task.status === "review");
-  const doneTasks = tasks.filter((task) => task.status === "done");
+  const todoTasks = tasks.filter((task: Task) => task.status === "todo");
+  const progressTasks = tasks.filter((task: Task) => task.status === "in-progress");
+  const reviewTasks = tasks.filter((task: Task) => task.status === "review");
+  const doneTasks = tasks.filter((task: Task) => task.status === "done");
 
   const stats = [
     {
