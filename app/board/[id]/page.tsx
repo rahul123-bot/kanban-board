@@ -484,7 +484,7 @@ const removeMember = async (memberId: string) => {
             <div className="flex flex-col gap-3 lg:flex-row">
               <Input
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e: any) => setTitle(e.target.value)}
                 placeholder="Enter task title..."
                 className="lg:flex-1"
               />
@@ -494,7 +494,7 @@ const removeMember = async (memberId: string) => {
                 <Input
                   type="date"
                   value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
+                  onChange={(e: any) => setDueDate(e.target.value)}
                   className="pl-11"
                 />
               </div>
@@ -517,7 +517,7 @@ const removeMember = async (memberId: string) => {
               <CardContent className="space-y-4">
                 <Input
                   value={editTitle}
-                  onChange={(e) => setEditTitle(e.target.value)}
+                  onChange={(e: any) => setEditTitle(e.target.value)}
                   placeholder="Task title"
                 />
 
@@ -555,7 +555,7 @@ const removeMember = async (memberId: string) => {
                 <Input
                   type="email"
                   value={inviteEmail}
-                  onChange={(e) => setInviteEmail(e.target.value)}
+                  onChange={(e: any) => setInviteEmail(e.target.value)}
                   placeholder="member@email.com"
                   className="pl-11"
                 />
