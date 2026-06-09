@@ -94,7 +94,7 @@ export default function ResetPasswordPage() {
                       placeholder="Enter new password"
                       className="pl-11"
                       value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      onChange={(e: any) => setPassword(e.target.value)}
                     />
                   </div>
                 </label>
