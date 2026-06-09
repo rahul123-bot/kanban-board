@@ -1,13 +1,14 @@
 "use client";
 
 import { useDraggable } from "@dnd-kit/core";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CalendarDays, GripVertical, PencilLine, Trash2 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface TaskCardProps {
+  key?: React.Key;
   id: string;
   title: string;
   due_date?: string | null;
