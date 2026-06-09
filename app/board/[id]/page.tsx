@@ -41,7 +41,7 @@ export default function BoardPage() {
   const router = useRouter();
   const boardId = params.id as string;
 
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState([] as Task[]);
   const [title, setTitle] = useState("");
   const [isAuthorized, setIsAuthorized] = useState(false);
 
@@ -49,7 +49,7 @@ export default function BoardPage() {
   const [editTitle, setEditTitle] = useState("");
 
   const [inviteEmail, setInviteEmail] = useState("");
-  const [members, setMembers] = useState<BoardMember[]>([]);
+  const [members, setMembers] = useState([] as BoardMember[]);
 
   const [isOwner, setIsOwner] = useState(false);
 
@@ -354,7 +354,7 @@ const removeMember = async (memberId: string) => {
     fetchTasks();
   };
 
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [activeId, setActiveId] = useState(null as string | null);
 
   const handleDragStart = (event: DragStartEvent) => {
     setActiveId(event.active.id.toString());
