@@ -658,11 +658,11 @@ const removeMember = async (memberId: string) => {
                 <Card className="w-64 border-white/70 bg-white/100 shadow-2xl scale-105 transform transition-all duration-150">
                   <CardContent className="p-3">
                     <p className="text-sm font-semibold leading-6 text-slate-900">
-                      {tasks.find((t) => t.id === activeId)?.title}
+                      {tasks.find((t: Task) => t.id === activeId)?.title}
                     </p>
-                    {tasks.find((t) => t.id === activeId)?.due_date && (
+                    {tasks.find((t: Task) => t.id === activeId)?.due_date && (
                       <p className="mt-2 text-xs text-slate-500">
-                        Due {new Date(tasks.find((t) => t.id === activeId)!.due_date!).toLocaleDateString()}
+                        Due {new Date(tasks.find((t: Task) => t.id === activeId)!.due_date!).toLocaleDateString()}
                       </p>
                     )}
                   </CardContent>
