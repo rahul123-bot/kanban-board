@@ -284,7 +284,7 @@ export default function DashboardPage() {
         </section>
 
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {boards.map((board) => (
+          {boards.map((board: Board) => (
             <Card
               key={board.id}
               className="group relative border-white/70 bg-white/85 shadow-[0_18px_60px_-30px_rgba(15,23,42,0.35)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_26px_80px_-30px_rgba(15,23,42,0.42)]"
