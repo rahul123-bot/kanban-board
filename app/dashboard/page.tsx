@@ -27,7 +27,7 @@ interface Board {
 }
 
 export default function DashboardPage() {
-  const [boards, setBoards] = useState<Board[]>([]);
+  const [boards, setBoards] = useState([] as Board[]);
   const [boardName, setBoardName] = useState("");
 
   const [editingBoardId, setEditingBoardId] = useState("");
