@@ -20,6 +20,7 @@ interface BoardColumnProps {
   tasks: Task[];
   onDelete: (id: string) => void;
   onEdit: (id: string, title: string) => void;
+  activeId?: string | null;
 }
 
 const columnTones: Record<
@@ -58,6 +59,7 @@ export default function BoardColumn({
   tasks,
   onDelete,
   onEdit,
+  activeId,
 }: BoardColumnProps) {
   const { setNodeRef, isOver } = useDroppable({
     id,
@@ -69,7 +71,7 @@ export default function BoardColumn({
     <Card
       ref={setNodeRef}
       className={cn(
-        "group relative min-h-[550px] border-white/70 bg-white/85 transition-all duration-200",
+        "group relative min-h-[220px] sm:min-h-[550px] border-white/70 bg-white/85 transition-all duration-200",
         isOver
           ? "scale-[1.01] ring-2 ring-sky-400/70 shadow-[0_24px_80px_-35px_rgba(14,165,233,0.35)]"
           : "shadow-[0_18px_60px_-30px_rgba(15,23,42,0.28)]"
@@ -141,6 +143,7 @@ export default function BoardColumn({
               due_date={task.due_date}
               onDelete={onDelete}
               onEdit={onEdit}
+              activeId={activeId}
             />
           ))
         )}

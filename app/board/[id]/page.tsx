@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { DndContext, DragEndEvent, DragOverlay, DragStartEvent, PointerSensor, TouchSensor, useSensor, useSensors, closestCenter } from "@dnd-kit/core";
 import {
   CalendarDays,
   ChevronLeft,
@@ -33,6 +33,7 @@ interface Task {
   id: string;
   title: string;
   status: string;
+  due_date?: string | null;
 }
 
 interface BoardMember {
@@ -358,13 +359,28 @@ const removeMember = async (memberId: string) => {
     fetchTasks();
   };
 
+  const [activeId, setActiveId] = useState<string | null>(null);
+
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id.toString());
+    console.log("dnd: start", event.active.id);
+  };
+
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
+
+    setActiveId(null);
+    console.log("dnd: end", active?.id, over?.id);
 
     if (!over) return;
 
     await updateTaskStatus(active.id.toString(), over.id.toString());
   };
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(TouchSensor, { activationConstraint: { delay: 80, tolerance: 8 } })
+  );
 
   const todoTasks = tasks.filter((task) => task.status === "todo");
   const progressTasks = tasks.filter((task) => task.status === "in-progress");
@@ -601,15 +617,16 @@ const removeMember = async (memberId: string) => {
             </div>
           </CardContent>
         </Card>
-        <DndContext onDragEnd={handleDragEnd}>
-          <div className="overflow-x-auto pb-2">
-            <div className="grid min-w-[1120px] grid-cols-4 gap-6 md:min-w-0 md:grid-cols-2 xl:grid-cols-4">
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
+          <div className="md:overflow-x-auto overflow-visible pb-2" style={{ touchAction: 'pan-y' }}>
+            <div className="grid min-w-0 grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
               <BoardColumn
                 id="todo"
                 title="Todo"
                 tasks={todoTasks}
                 onDelete={deleteTask}
                 onEdit={startEdit}
+                activeId={activeId}
               />
 
               <BoardColumn
@@ -618,6 +635,7 @@ const removeMember = async (memberId: string) => {
                 tasks={progressTasks}
                 onDelete={deleteTask}
                 onEdit={startEdit}
+                activeId={activeId}
               />
 
               <BoardColumn
@@ -626,6 +644,7 @@ const removeMember = async (memberId: string) => {
                 tasks={reviewTasks}
                 onDelete={deleteTask}
                 onEdit={startEdit}
+                activeId={activeId}
               />
 
               <BoardColumn
@@ -634,9 +653,28 @@ const removeMember = async (memberId: string) => {
                 tasks={doneTasks}
                 onDelete={deleteTask}
                 onEdit={startEdit}
+                activeId={activeId}
               />
             </div>
           </div>
+          <DragOverlay>
+            {activeId ? (
+              <div className="pointer-events-none z-50 -translate-y-2 transform-gpu">
+                <Card className="w-64 border-white/70 bg-white/100 shadow-2xl scale-105 transform transition-all duration-150">
+                  <CardContent className="p-3">
+                    <p className="text-sm font-semibold leading-6 text-slate-900">
+                      {tasks.find((t) => t.id === activeId)?.title}
+                    </p>
+                    {tasks.find((t) => t.id === activeId)?.due_date && (
+                      <p className="mt-2 text-xs text-slate-500">
+                        Due {new Date(tasks.find((t) => t.id === activeId)!.due_date!).toLocaleDateString()}
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              </div>
+            ) : null}
+          </DragOverlay>
         </DndContext>
       </div>
     </main>
