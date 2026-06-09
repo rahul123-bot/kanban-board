@@ -54,7 +54,7 @@ export default function BoardPage() {
   const [isOwner, setIsOwner] = useState(false);
 
   const [dueDate, setDueDate] = useState("");
-  const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
+  const channelRef = useRef(null as ReturnType<typeof supabase.channel> | null);
 
   const fetchTasks = useCallback(async () => {
        
