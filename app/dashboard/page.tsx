@@ -231,7 +231,7 @@ export default function DashboardPage() {
                 <div className="flex flex-col gap-3 md:flex-row">
                   <Input
                     value={boardName}
-                    onChange={(e) => setBoardName(e.target.value)}
+                    onChange={(e: any) => setBoardName(e.target.value)}
                     placeholder="Enter board name..."
                     className="md:flex-1"
                   />
@@ -374,7 +374,7 @@ export default function DashboardPage() {
             <CardContent className="space-y-4">
               <Input
                 value={editBoardName}
-                onChange={(e) => setEditBoardName(e.target.value)}
+                onChange={(e: any) => setEditBoardName(e.target.value)}
                 placeholder="Board name"
               />
 
