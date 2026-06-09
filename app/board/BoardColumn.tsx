@@ -4,15 +4,9 @@ import { useDroppable } from "@dnd-kit/core";
 import { CircleDashed, Layers3 } from "lucide-react";
 
 import TaskCard from "@/components/task/TaskCard";
+import type { Task } from "@/types/task";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-
-interface Task {
-  id: string;
-  title: string;
-  status: string;
-  due_date?: string;
-}
 
 interface BoardColumnProps {
   id: string;

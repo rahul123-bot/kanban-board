@@ -10,7 +10,7 @@ import { Card, CardContent } from "@/components/ui/card";
 interface TaskCardProps {
   id: string;
   title: string;
-  due_date?: string;
+  due_date?: string | null;
   onDelete: (id: string) => void;
   onEdit: (id: string, title: string) => void;
   activeId?: string | null;

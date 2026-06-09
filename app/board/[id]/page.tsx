@@ -29,12 +29,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 
-interface Task {
-  id: string;
-  title: string;
-  status: string;
-  due_date?: string | null;
-}
+import type { Task } from "@/types/task";
 
 interface BoardMember {
   id: string;
