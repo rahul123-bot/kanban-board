@@ -30,7 +30,7 @@ export default function LoginPage() {
     try {
       setLoading(true);
 
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -40,8 +40,14 @@ export default function LoginPage() {
         return;
       }
 
-      toast.success("Login successful!");
-      router.push("/dashboard");
+      if (data?.session) {
+        toast.success("Login successful!");
+        router.push("/dashboard");
+      } else {
+        // In some cases the session may not be immediately available client-side
+        toast.success("Login successful — redirecting...");
+        router.push("/dashboard");
+      }
     } catch (err) {
       console.error(err);
       toast.error("Something went wrong");
@@ -51,20 +57,32 @@ export default function LoginPage() {
   };
 
   const handleGoogleLogin = async () => {
-    await supabase.auth.signOut({ scope: "local" });
+    try {
+      await supabase.auth.signOut();
 
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-        queryParams: {
-          prompt: "select_account consent",
+      const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            prompt: "select_account consent",
+          },
         },
-      },
-    });
+      });
 
-    if (error) {
-      console.log(error.message);
+      if (error) {
+        console.error(error);
+        toast.error(error.message || "Google sign-in failed");
+        return;
+      }
+
+      // If the provider returns a URL or session, the browser will redirect automatically
+      if (data?.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Google sign-in failed");
     }
   };
 
