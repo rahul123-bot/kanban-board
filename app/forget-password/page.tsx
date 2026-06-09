@@ -91,13 +91,13 @@ export default function ForgotPasswordPage() {
                   <span className="text-sm font-medium text-slate-700">Email</span>
                   <div className="relative">
                     <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-                    <Input
-                      type="email"
-                      placeholder="Enter email"
-                      className="pl-11"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                    />
+                      <Input
+                        type="email"
+                        placeholder="Enter email"
+                        className="pl-11"
+                        value={email}
+                        onChange={(e: any) => setEmail(e.target.value)}
+                      />
                   </div>
                 </label>
 
