@@ -8,9 +8,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 interface TaskCardProps {
+  key?: string | number;
   id: string;
   title: string;
-  due_date?: string;
+  due_date?: string | null;
   onDelete: (id: string) => void;
   onEdit: (id: string, title: string) => void;
   activeId?: string | null;

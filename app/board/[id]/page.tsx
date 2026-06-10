@@ -29,12 +29,7 @@ import { Input } from "@/components/ui/input";
 import { supabase } from "@/lib/supabase";
 import { toast } from "sonner";
 
-interface Task {
-  id: string;
-  title: string;
-  status: string;
-  due_date?: string | null;
-}
+import type { Task } from "@/types/task";
 
 interface BoardMember {
   id: string;
@@ -46,7 +41,7 @@ export default function BoardPage() {
   const router = useRouter();
   const boardId = params.id as string;
 
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState([] as Task[]);
   const [title, setTitle] = useState("");
   const [isAuthorized, setIsAuthorized] = useState(false);
 
@@ -54,12 +49,12 @@ export default function BoardPage() {
   const [editTitle, setEditTitle] = useState("");
 
   const [inviteEmail, setInviteEmail] = useState("");
-  const [members, setMembers] = useState<BoardMember[]>([]);
+  const [members, setMembers] = useState([] as BoardMember[]);
 
   const [isOwner, setIsOwner] = useState(false);
 
   const [dueDate, setDueDate] = useState("");
-  const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
+  const channelRef = useRef(null as ReturnType<typeof supabase.channel> | null);
 
   const fetchTasks = useCallback(async () => {
        
@@ -359,7 +354,7 @@ const removeMember = async (memberId: string) => {
     fetchTasks();
   };
 
-  const [activeId, setActiveId] = useState<string | null>(null);
+  const [activeId, setActiveId] = useState(null as string | null);
 
   const handleDragStart = (event: DragStartEvent) => {
     setActiveId(event.active.id.toString());
@@ -382,10 +377,12 @@ const removeMember = async (memberId: string) => {
     useSensor(TouchSensor, { activationConstraint: { delay: 80, tolerance: 8 } })
   );
 
-  const todoTasks = tasks.filter((task) => task.status === "todo");
-  const progressTasks = tasks.filter((task) => task.status === "in-progress");
-  const reviewTasks = tasks.filter((task) => task.status === "review");
-  const doneTasks = tasks.filter((task) => task.status === "done");
+  const normalizedTasks = tasks.map((t: Task) => ({ ...t, due_date: t.due_date === null ? undefined : t.due_date }));
+
+  const todoTasks = normalizedTasks.filter((task: Task) => task.status === "todo");
+  const progressTasks = normalizedTasks.filter((task: Task) => task.status === "in-progress");
+  const reviewTasks = normalizedTasks.filter((task: Task) => task.status === "review");
+  const doneTasks = normalizedTasks.filter((task: Task) => task.status === "done");
 
   const stats = [
     {
@@ -489,7 +486,7 @@ const removeMember = async (memberId: string) => {
             <div className="flex flex-col gap-3 lg:flex-row">
               <Input
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                onChange={(e: any) => setTitle(e.target.value)}
                 placeholder="Enter task title..."
                 className="lg:flex-1"
               />
@@ -499,7 +496,7 @@ const removeMember = async (memberId: string) => {
                 <Input
                   type="date"
                   value={dueDate}
-                  onChange={(e) => setDueDate(e.target.value)}
+                  onChange={(e: any) => setDueDate(e.target.value)}
                   className="pl-11"
                 />
               </div>
@@ -522,7 +519,7 @@ const removeMember = async (memberId: string) => {
               <CardContent className="space-y-4">
                 <Input
                   value={editTitle}
-                  onChange={(e) => setEditTitle(e.target.value)}
+                  onChange={(e: any) => setEditTitle(e.target.value)}
                   placeholder="Task title"
                 />
 
@@ -560,7 +557,7 @@ const removeMember = async (memberId: string) => {
                 <Input
                   type="email"
                   value={inviteEmail}
-                  onChange={(e) => setInviteEmail(e.target.value)}
+                  onChange={(e: any) => setInviteEmail(e.target.value)}
                   placeholder="member@email.com"
                   className="pl-11"
                 />
@@ -586,7 +583,7 @@ const removeMember = async (memberId: string) => {
                     No members yet. Invite someone to start collaborating.
                   </div>
                 ) : (
-                  members.map((member) => (
+                  members.map((member: BoardMember) => (
                     <div
                       key={member.id}
                       className="flex items-center justify-between gap-3 rounded-2xl border border-white/80 bg-white px-4 py-3 shadow-sm"
@@ -663,11 +660,11 @@ const removeMember = async (memberId: string) => {
                 <Card className="w-64 border-white/70 bg-white/100 shadow-2xl scale-105 transform transition-all duration-150">
                   <CardContent className="p-3">
                     <p className="text-sm font-semibold leading-6 text-slate-900">
-                      {tasks.find((t) => t.id === activeId)?.title}
+                      {tasks.find((t: Task) => t.id === activeId)?.title}
                     </p>
-                    {tasks.find((t) => t.id === activeId)?.due_date && (
+                    {tasks.find((t: Task) => t.id === activeId)?.due_date && (
                       <p className="mt-2 text-xs text-slate-500">
-                        Due {new Date(tasks.find((t) => t.id === activeId)!.due_date!).toLocaleDateString()}
+                        Due {new Date(tasks.find((t: Task) => t.id === activeId)!.due_date!).toLocaleDateString()}
                       </p>
                     )}
                   </CardContent>

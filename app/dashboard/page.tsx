@@ -27,7 +27,7 @@ interface Board {
 }
 
 export default function DashboardPage() {
-  const [boards, setBoards] = useState<Board[]>([]);
+  const [boards, setBoards] = useState([] as Board[]);
   const [boardName, setBoardName] = useState("");
 
   const [editingBoardId, setEditingBoardId] = useState("");
@@ -231,7 +231,7 @@ export default function DashboardPage() {
                 <div className="flex flex-col gap-3 md:flex-row">
                   <Input
                     value={boardName}
-                    onChange={(e) => setBoardName(e.target.value)}
+                    onChange={(e: any) => setBoardName(e.target.value)}
                     placeholder="Enter board name..."
                     className="md:flex-1"
                   />
@@ -284,7 +284,7 @@ export default function DashboardPage() {
         </section>
 
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {boards.map((board) => (
+          {boards.map((board: Board) => (
             <Card
               key={board.id}
               className="group relative border-white/70 bg-white/85 shadow-[0_18px_60px_-30px_rgba(15,23,42,0.35)] transition-all duration-200 hover:-translate-y-1 hover:shadow-[0_26px_80px_-30px_rgba(15,23,42,0.42)]"
@@ -374,7 +374,7 @@ export default function DashboardPage() {
             <CardContent className="space-y-4">
               <Input
                 value={editBoardName}
-                onChange={(e) => setEditBoardName(e.target.value)}
+                onChange={(e: any) => setEditBoardName(e.target.value)}
                 placeholder="Board name"
               />
 

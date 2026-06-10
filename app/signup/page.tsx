@@ -156,7 +156,7 @@ export default function SignupPage() {
                     placeholder="Enter email"
                     className="pl-11"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e: any) => setEmail(e.target.value)}
                   />
                 </div>
               </label>
@@ -170,7 +170,7 @@ export default function SignupPage() {
                     placeholder="Enter password"
                     className="pl-11"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e: any) => setPassword(e.target.value)}
                   />
                 </div>
               </label>

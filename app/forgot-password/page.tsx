@@ -96,7 +96,7 @@ export default function ForgotPasswordPage() {
                       placeholder="Enter email"
                       className="pl-11"
                       value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      onChange={(e: any) => setEmail(e.target.value)}
                     />
                   </div>
                 </label>
