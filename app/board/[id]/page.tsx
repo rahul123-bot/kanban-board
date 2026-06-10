@@ -56,6 +56,30 @@ export default function BoardPage() {
   const [dueDate, setDueDate] = useState("");
   const channelRef = useRef(null as ReturnType<typeof supabase.channel> | null);
 
+  // Drag state/hooks must be declared unconditionally so hooks order stays stable
+  const [activeId, setActiveId] = useState(null as string | null);
+
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id.toString());
+    console.log("dnd: start", event.active.id);
+  };
+
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    setActiveId(null);
+    console.log("dnd: end", active?.id, over?.id);
+
+    if (!over) return;
+
+    await updateTaskStatus(active.id.toString(), over.id.toString());
+  };
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(TouchSensor, { activationConstraint: { delay: 80, tolerance: 8 } })
+  );
+
   const fetchTasks = useCallback(async () => {
        
     const { data, error } = await supabase
@@ -353,29 +377,6 @@ const removeMember = async (memberId: string) => {
 
     fetchTasks();
   };
-
-  const [activeId, setActiveId] = useState(null as string | null);
-
-  const handleDragStart = (event: DragStartEvent) => {
-    setActiveId(event.active.id.toString());
-    console.log("dnd: start", event.active.id);
-  };
-
-  const handleDragEnd = async (event: DragEndEvent) => {
-    const { active, over } = event;
-
-    setActiveId(null);
-    console.log("dnd: end", active?.id, over?.id);
-
-    if (!over) return;
-
-    await updateTaskStatus(active.id.toString(), over.id.toString());
-  };
-
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(TouchSensor, { activationConstraint: { delay: 80, tolerance: 8 } })
-  );
 
   const normalizedTasks = tasks.map((t: Task) => ({ ...t, due_date: t.due_date === null ? undefined : t.due_date }));
 
