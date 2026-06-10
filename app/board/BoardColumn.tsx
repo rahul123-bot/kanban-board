@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 interface BoardColumnProps {
   id: string;
   title: string;
-  tasks: Task[];
+  tasks: Array<Task & { due_date?: string | null }>;
   onDelete: (id: string) => void;
   onEdit: (id: string, title: string) => void;
   activeId?: string | null;
@@ -134,7 +134,7 @@ export default function BoardColumn({
               key={task.id}
               id={task.id}
               title={task.title}
-              due_date={task.due_date}
+              due_date={task.due_date ?? undefined}
               onDelete={onDelete}
               onEdit={onEdit}
               activeId={activeId}

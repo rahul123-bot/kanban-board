@@ -87,8 +87,8 @@ export default function LoginPage() {
   };
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }: any) => {
-      if (data?.session) {
+    supabase.auth.getSession().then(({ data }) => {
+      if (data.session) {
         router.replace("/dashboard");
       }
     });

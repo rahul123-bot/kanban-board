@@ -377,10 +377,12 @@ const removeMember = async (memberId: string) => {
     useSensor(TouchSensor, { activationConstraint: { delay: 80, tolerance: 8 } })
   );
 
-  const todoTasks = tasks.filter((task: Task) => task.status === "todo");
-  const progressTasks = tasks.filter((task: Task) => task.status === "in-progress");
-  const reviewTasks = tasks.filter((task: Task) => task.status === "review");
-  const doneTasks = tasks.filter((task: Task) => task.status === "done");
+  const normalizedTasks = tasks.map((t: Task) => ({ ...t, due_date: t.due_date === null ? undefined : t.due_date }));
+
+  const todoTasks = normalizedTasks.filter((task: Task) => task.status === "todo");
+  const progressTasks = normalizedTasks.filter((task: Task) => task.status === "in-progress");
+  const reviewTasks = normalizedTasks.filter((task: Task) => task.status === "review");
+  const doneTasks = normalizedTasks.filter((task: Task) => task.status === "done");
 
   const stats = [
     {
